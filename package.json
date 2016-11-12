@@ -45,6 +45,7 @@
     "resource-router-middleware": "^0.5.1",
     "tean-js": "^1.1.1",
     "traderjs": "^2.1.3",
+    "tsne-js": "^1.0.3",
     "yahoo-finance": "latest"
   },
   "devDependencies": {

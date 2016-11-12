@@ -36,41 +36,57 @@ MongoClient.connect('mongodb://localhost:27017/bitgraph', (err, db) => {
     //         }
     //     })
     // })
-    let data = [], clusters;
-
-    async.series([
-        (callback) => {
-            async.eachLimit(companies.slice(0, 1000), 1, (company, callback) => {
-                db.collection(company).find().toArray().then(results => {
-                    let arr = _.map(results, (row) => row.open).slice(0, 24);
-                    if (arr && arr.length > 0) data.push(arr);
-                    callback();
-                })
-            }, () => {
-                callback()
-            })
-        },
-        (callback) => {
-            let dbscan = new clustering.KMEANS();
-            clusters = dbscan.run(data, Math.floor(data.length / 20));
-            callback();
-        },
-        (callback) => {
-            _.each(clusters, (cluster) => {
-                console.log(cluster)
-            })
-            console.log("TOTAL CLUSTERS: " + clusters.length)
-        }
-    ])
+    // let data = {}, clusters, network;
+    //
+    // async.series([
+    //     (callback) => {
+    //         async.eachLimit(companies.slice(0, 500), 1, (company, callback) => {
+    //             db.collection(company).find().toArray().then(results => {
+    //                 let arr = _.map(results, (row) => row.open).slice(0, 6);
+    //                 if (arr && arr.length > 0) data[company] = arr;
+    //                 callback();
+    //             })
+    //         }, () => {
+    //             callback()
+    //         })
+    //     },
+    //     (callback) => {
+    //         let ideas = _.map(_.values(data), (val, index) => {
+    //             // val.unshift(Object.keys(data)[index]);
+    //             return val;
+    //         });
+    //         let lines = "";
+    //
+    //         _.each(ideas, row => {
+    //             lines += row.join(",") + "\n";
+    //         })
+    //
+    //         fs.writeFileSync(`data.csv`, lines);
+    //
+    //         console.log(Object.keys(data).join("\n"));
+    //
+    //         // let dbscan = new clustering.KMEANS();
+    //         // let values = _.values(data)
+    //         // clusters = dbscan.run(values, Math.floor(values.length / 10));
+    //         callback();
+    //     },
+    //     // (callback) => {
+    //     //     let keys = Object.keys(data);
+    //     //     network = _.map(clusters, cluster => _.map(cluster, member => keys[member]))
+    //     //     console.log("TOTAL CLUSTERS: " + network.length)
+    //     // }
+    // ])
 
     let app = express();
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
 
-    app.get("/", (req, res) => {
-        res.send(tags);
-    });
+    // app.get("/", (req, res) => {
+    //     res.sendFile(path.join(__dirname + '/index.html'));
+    // });
+
+    app.use('/', express.static('views'))
 
     let server = app.listen(3000, function () {
         console.log("Listening on port %s...", server.address().port);
