@@ -23,8 +23,9 @@ MongoClient.connect('mongodb://localhost:27017/bitgraph', (err, db) => {
             to: '2016-11-12',
             period: 'd'
         }, (err, quotes) => {
-            console.log(quotes.length);
-            callback();
+            db.collection(company).insertMany(quotes).then(() => {
+                callback();
+            });
         })
     })
 
