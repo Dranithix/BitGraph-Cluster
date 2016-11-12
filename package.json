@@ -28,6 +28,8 @@
   "license": "MIT",
   "dependencies": {
     "async": "^2.1.2",
+    "asyncawait": "^1.0.6",
+    "bluebird": "^3.4.6",
     "body-parser": "^1.13.3",
     "compression": "^1.5.2",
     "cors": "^2.7.1",
@@ -39,6 +41,7 @@
     "finance-scraper-js": "0.0.1",
     "google-finance": "^0.1.7",
     "lodash": "^4.16.6",
+    "mongodb": "^2.2.11",
     "resource-router-middleware": "^0.5.1",
     "tean-js": "^1.1.1",
     "traderjs": "^2.1.3",
